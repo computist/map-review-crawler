@@ -14,8 +14,10 @@ sudo pip install -U selenium
 ```
 
 ### 2. create and install self-signed certificate
+```
 cert.pem
 key.pem
+```
 Use the filename above for your certificate and put it in the same folder.
 
 ### 3. run data server
