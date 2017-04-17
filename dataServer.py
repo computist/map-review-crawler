@@ -4,7 +4,7 @@ from celery import Celery
 from OpenSSL import SSL
 import time
 import sqlite3
-import sys
+import sys, signal
 import re
 from selenium import webdriver
 
@@ -45,10 +45,12 @@ def main():
 
 @celery.task
 def scrape(cid):
+    if 'driver' not in locals() and 'driver' not in globals():
+        global driver
+        driver = webdriver.PhantomJS()
     try:
         print(cid)
         url = "https://maps.google.com/?cid=" + cid
-        driver = webdriver.PhantomJS()
         driver.get(url)
         html = driver.page_source
         arr = html.split("search?q=")
@@ -80,8 +82,6 @@ def scrape(cid):
                     print("Stored %d reviews for %s." % (len(reviews)/2, name))
     except Exception as e:
         print(e)
-    finally:
-        driver.close()
     
 if __name__ == "__main__":
     context = ('cert.pem', 'key.pem')
