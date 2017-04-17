@@ -16,10 +16,12 @@ sudo pip install -U selenium
 ### 2. create and install self-signed certificate
 cert.pem
 key.pem
-Use the name above for your certificate and put it in the same folder.
+Use the filename above for your certificate and put it in the same folder.
 
 ### 3. run data server
+```
 python dataServer.py
+```
 
 ### 4. run redis
 ```
@@ -31,14 +33,18 @@ redis-server
 celery worker -A dataServer.celery --loglevel=info --concurrency=1
 ```
 Suggest to use lower concurrency value to avoid blocking by google.
-Sqlite has limited support for concurrency, if concurrency > 1, db file may corrupt in the middle. use other db to increase concurrency.
+Sqlite has limited support for concurrency. 
+If concurrency > 1, db file may corrupt in the middle.
+If you want higher concurrency, use other db instead.
 
 ### 6. open browser (chrome or firefox), goto https://localhost:5000/
-It will prompt you that the page is not safe. Click on continue to page without warning. The browser will not warn you again for current session.
+It will prompt you that the page is not safe. 
+Click on continue to page without warning. The browser will not warn you again for the current session.
 
 ### 7. goto google map (full mode, not lite mode)
 Run code listen.js in browser console.
-After you copy paste the js and run in console, you can close the console.
+After you copy paste the js and hit ENTER, you can close the console.
+The script will monitor event in the background.
 
 ### 8. search restaurant, it will auto store data
-Move map around, and the map will auto search the new area and the script will capture new results.
+Move the map around, and the map will auto search the new area and the script will capture new results.
